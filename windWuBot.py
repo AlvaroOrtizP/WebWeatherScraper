@@ -13,6 +13,9 @@ import prettytable as pt
 from telegram import ParseMode
 import telegram
 from telegram.ext import CommandHandler, Updater
+import os
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
 
 
 #INICIO BOT 
@@ -29,28 +32,109 @@ def saludar(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 def tiempo(update, context):
-    data = json.loads(main())  # json_string es la variable que contiene tu JSON
-    table_data = []
-    for hora, info in data.items():
-        viento = info['viento']
-        rafagas = info['rafagas']
-        altura_olas = info['olas_altura']
-        periodo_olas = info['periodo_olas']
-        temp_tierra = info['temperatura_tierra']
-        table_data.append((hora, viento, rafagas, altura_olas, periodo_olas, temp_tierra))
-    table = pt.PrettyTable(['Hora', 'Viento', 'Ráfagas', 'Altura de olas', 'Periodo de olas', 'Temperatura tierra'], hrules=pt.ALL)
-    table.align['Hora'] = 'l'
-    table.align['Viento'] = 'r'
-    table.align['Ráfagas'] = 'r'
-    table.align['Altura de olas'] = 'r'
-    table.align['Periodo de olas'] = 'r'
-    table.align['Temperatura tierra'] = 'r'
-    table.field_names = table.field_names
-    for row in table_data:
-        table.add_row(row)
-    update.message.reply_text(f'<pre>{table}</pre>', parse_mode=ParseMode.HTML)
+    #data = json.loads(main())  # json_string es la variable que contiene tu JSON
+    """
+    
+    # Define los colores de la tabla y las fuentes de texto
+    bg_color = (49, 68, 99)  # azul oscuro
+    text_color = (255, 255, 255)  # blanco
+    font = ImageFont.truetype("arial.ttf", size=16)
+    header_font = ImageFont.truetype("arialbd.ttf", size=18)
+
+    # Define los datos que se mostrarán en la tabla
+    data = {
+        "16. 14h": {"viento": "7", "rafagas": "7", "olas_altura": "0.9", "periodo_olas": "12", "temperatura_tierra": "14"},
+        "16. 16h": {"viento": "8", "rafagas": "9", "olas_altura": "0.9", "periodo_olas": "12", "temperatura_tierra": "14"},
+        "16. 18h": {"viento": "9", "rafagas": "12", "olas_altura": "0.9", "periodo_olas": "12", "temperatura_tierra": "14"},
+        "16. 20h": {"viento": "9", "rafagas": "13", "olas_altura": "0.8", "periodo_olas": "12", "temperatura_tierra": "13"},
+        "16. 22h": {"viento": "8", "rafagas": "11", "olas_altura": "0.8", "periodo_olas": "12", "temperatura_tierra": "11"},
+        "17. 03h": {"viento": "6", "rafagas": "9", "olas_altura": "0.7", "periodo_olas": "11", "temperatura_tierra": "9"},
+    }
+
+    # Define las dimensiones de la imagen y la tabla
+    width, height = 800, 750
+    table_width, table_height = 500, 250
+
+    # Crea la imagen y el objeto de dibujo
+    img = Image.new("RGB", (width, height), color=bg_color)
+    draw = ImageDraw.Draw(img)
+
+    # Dibuja el encabezado de la tabla
+    draw.rectangle((25, 25, 700, 75), fill=text_color)
+    draw.text((40, 40), "Hora", font=header_font, fill=bg_color)
+    draw.text((100, 40), "Viento", font=header_font, fill=bg_color)
+    draw.text((180, 40), "Ráfagas", font=header_font, fill=bg_color)
+    draw.text((265, 40), "Al olas", font=header_font, fill=bg_color)
+    draw.text((340, 40), "Per olas", font=header_font, fill=bg_color)
+    draw.text((435, 40), "Tem", font=header_font, fill=bg_color)
+
+    # Dibuja cada fila de la tabla
+    x, y = 25, 100
+    for key, value in data.items():
+        draw.rectangle((x, y, x+table_width, y+30), fill=text_color)
+        draw.text((x+10, y+8), key, font=font, fill=bg_color)
+        draw.text((x+100, y+8), value["viento"], font=font, fill=bg_color)
+        draw.text((x+180, y+8), value["rafagas"], font=font, fill=bg_color)
+        draw.text((x+260, y+8), value["olas_altura"], font=font, fill=bg_color)
+        draw.text((x+340, y+8), value["periodo_olas"], font=font, fill=bg_color)
+        draw.text((x+420, y+8), value["temperatura_tierra"], font=font, fill=bg_color)
+    
+        y += 30
+
+    """
+    img = crear_imagen(json.loads(main()))
+    # Convertimos la imagen a bytes para poder enviarla
+    imagen_bytes = BytesIO()
+    img.save(imagen_bytes, format='PNG')
+    imagen_bytes.seek(0)
+    
+    # Enviamos la imagen al usuario
+    bot = context.bot
+    bot.send_photo(chat_id=update.effective_chat.id, photo=imagen_bytes)
+    
+    # Cerramos la imagen
+    imagen_bytes.close()
     
     
+def crear_imagen(data):
+    # Define los colores de la tabla y las fuentes de texto
+    bg_color = (49, 68, 99)  # azul oscuro
+    text_color = (255, 255, 255)  # blanco
+    font = ImageFont.truetype("arial.ttf", size=16)
+    header_font = ImageFont.truetype("arialbd.ttf", size=18)
+
+    # Define las dimensiones de la imagen y la tabla
+    width, height = 800, 750
+    table_width, table_height = 500, 250
+
+    # Crea la imagen y el objeto de dibujo
+    img = Image.new("RGB", (width, height), color=bg_color)
+    draw = ImageDraw.Draw(img)
+
+    # Dibuja el encabezado de la tabla
+    draw.rectangle((25, 25, 700, 75), fill=text_color)
+    draw.text((40, 40), "Hora", font=header_font, fill=bg_color)
+    draw.text((100, 40), "Viento", font=header_font, fill=bg_color)
+    draw.text((180, 40), "Ráfagas", font=header_font, fill=bg_color)
+    draw.text((265, 40), "Al olas", font=header_font, fill=bg_color)
+    draw.text((340, 40), "Per olas", font=header_font, fill=bg_color)
+    draw.text((435, 40), "Tem", font=header_font, fill=bg_color)
+
+    # Dibuja cada fila de la tabla
+    x, y = 25, 100
+    for key, value in data.items():
+        draw.rectangle((x, y, x+table_width, y+30), fill=text_color)
+        draw.text((x+10, y+8), key, font=font, fill=bg_color)
+        draw.text((x+100, y+8), value["viento"], font=font, fill=bg_color)
+        draw.text((x+180, y+8), value["rafagas"], font=font, fill=bg_color)
+        draw.text((x+260, y+8), value["olas_altura"], font=font, fill=bg_color)
+        draw.text((x+340, y+8), value["periodo_olas"], font=font, fill=bg_color)
+        draw.text((x+420, y+8), value["temperatura_tierra"], font=font, fill=bg_color)
+    
+        y += 30
+
+    # Devuelve la imagen
+    return img
 
     
     
