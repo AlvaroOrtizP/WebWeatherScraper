@@ -7,15 +7,11 @@ from telegram.ext import CommandHandler, Updater
 import generadorImagen
 import obtenerDatosWeb
 from io import BytesIO
-import yaml
 
+import config
 #INICIO BOT 
 
-# Definir token del bot
-with open('config.yaml') as f:
-    config = yaml.safe_load(f)
-
-TOKEN = config['bot_token']
+TOKEN = config.TOKEN
 
 # Inicializar bot
 bot = telegram.Bot(token=TOKEN)
