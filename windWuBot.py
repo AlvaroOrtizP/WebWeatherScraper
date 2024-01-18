@@ -2,6 +2,7 @@ import json
 from io import BytesIO
 import generadorImagen
 import obtenerDatosWeb
+import datetime
 #INICIO BOT 
 
 
@@ -62,8 +63,16 @@ def main():
 if __name__ == "__main__":
     # Ejecutar la función main y hacer algo con el resultado (por ejemplo, guardar en un archivo)
     resultado_json = main()
-    print("1")
     
     if resultado_json:
-        with open("datos.json", "w") as f:
+        # Obtener la fecha actual
+        fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
+        
+        # Construir el nombre del archivo con la fecha
+        nombre_archivo = f"datos_{fecha_actual}.json"
+
+        # Guardar en el archivo con el nombre construido
+        with open(nombre_archivo, "w") as f:
             f.write(resultado_json)
+
+        print(f"Datos guardados en el archivo {nombre_archivo}")
