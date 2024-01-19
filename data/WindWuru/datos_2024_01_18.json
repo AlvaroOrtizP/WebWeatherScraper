@@ -1,0 +1,162 @@
+{
+  "\"18. 13h\"": {
+    "viento": "11",
+    "rafagas": "20",
+    "olas_altura": "1.2",
+    "periodo_olas": "7",
+    "temperatura_tierra": "14",
+    "temperatura_agua": null
+  },
+  "\"18. 15h\"": {
+    "viento": "14",
+    "rafagas": "23",
+    "olas_altura": "1.7",
+    "periodo_olas": "8",
+    "temperatura_tierra": "11",
+    "temperatura_agua": null
+  },
+  "\"18. 17h\"": {
+    "viento": "9",
+    "rafagas": "16",
+    "olas_altura": "1.9",
+    "periodo_olas": "7",
+    "temperatura_tierra": "10",
+    "temperatura_agua": null
+  },
+  "\"18. 19h\"": {
+    "viento": "4",
+    "rafagas": "7",
+    "olas_altura": "1.8",
+    "periodo_olas": "8",
+    "temperatura_tierra": "10",
+    "temperatura_agua": null
+  },
+  "\"18. 21h\"": {
+    "viento": "7",
+    "rafagas": "10",
+    "olas_altura": "1.6",
+    "periodo_olas": "8",
+    "temperatura_tierra": "10",
+    "temperatura_agua": null
+  },
+  "\"19. 03h\"": {
+    "viento": "12",
+    "rafagas": "18",
+    "olas_altura": "1.5",
+    "periodo_olas": "7",
+    "temperatura_tierra": "9",
+    "temperatura_agua": null
+  },
+  "\"19. 05h\"": {
+    "viento": "14",
+    "rafagas": "20",
+    "olas_altura": "1.5",
+    "periodo_olas": "7",
+    "temperatura_tierra": "8",
+    "temperatura_agua": null
+  },
+  "\"19. 07h\"": {
+    "viento": "14",
+    "rafagas": "21",
+    "olas_altura": "1.6",
+    "periodo_olas": "7",
+    "temperatura_tierra": "8",
+    "temperatura_agua": null
+  },
+  "\"19. 09h\"": {
+    "viento": "14",
+    "rafagas": "21",
+    "olas_altura": "1.6",
+    "periodo_olas": "5",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 11h\"": {
+    "viento": "14",
+    "rafagas": "20",
+    "olas_altura": "1.6",
+    "periodo_olas": "5",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 13h\"": {
+    "viento": "14",
+    "rafagas": "21",
+    "olas_altura": "1.6",
+    "periodo_olas": "6",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 15h\"": {
+    "viento": "13",
+    "rafagas": "20",
+    "olas_altura": "1.6",
+    "periodo_olas": "6",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 17h\"": {
+    "viento": "11",
+    "rafagas": "18",
+    "olas_altura": "1.5",
+    "periodo_olas": "6",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 19h\"": {
+    "viento": "9",
+    "rafagas": "14",
+    "olas_altura": "1.4",
+    "periodo_olas": "6",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"19. 21h\"": {
+    "viento": "8",
+    "rafagas": "12",
+    "olas_altura": "1.4",
+    "periodo_olas": "6",
+    "temperatura_tierra": "7",
+    "temperatura_agua": null
+  },
+  "\"20. 03h\"": {
+    "viento": "4",
+    "rafagas": "7",
+    "olas_altura": "1.1",
+    "periodo_olas": "6",
+    "temperatura_tierra": "5",
+    "temperatura_agua": null
+  },
+  "\"20. 05h\"": {
+    "viento": "4",
+    "rafagas": "7",
+    "olas_altura": "1.1",
+    "periodo_olas": "6",
+    "temperatura_tierra": "5",
+    "temperatura_agua": null
+  },
+  "\"20. 07h\"": {
+    "viento": "5",
+    "rafagas": "7",
+    "olas_altura": "1",
+    "periodo_olas": "6",
+    "temperatura_tierra": "4",
+    "temperatura_agua": null
+  },
+  "\"20. 09h\"": {
+    "viento": "6",
+    "rafagas": "9",
+    "olas_altura": "0.9",
+    "periodo_olas": "6",
+    "temperatura_tierra": "4",
+    "temperatura_agua": null
+  },
+  "\"20. 11h\"": {
+    "viento": "8",
+    "rafagas": "11",
+    "olas_altura": "0.9",
+    "periodo_olas": "6",
+    "temperatura_tierra": "6",
+    "temperatura_agua": null
+  }
+}

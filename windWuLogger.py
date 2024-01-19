@@ -18,7 +18,7 @@ def crear_json_padre(datos):
         ola_altura = olas_altura_datos[i] 
         periodo_ola = periodo_olas[i] 
         temperatura_tierra = temperaturas_tierra[i]
-        
+
         resultado[json.dumps(hora)] = {
             "viento": viento,
             "rafagas": rafaga,
@@ -37,6 +37,7 @@ DOM_RAFAGAS_VIENTO = 'tabid_0_0_GUST'
 DOM_OLA_ALTURA = 'tabid_0_0_HTSGW'
 DOM_PERIODO_OLAS = 'tabid_0_0_PERPW'
 DOM_TEMPERATURA_TIERRA = 'tabid_0_0_TMPE'
+
 
 def main():
     driver = obtenerDatosWeb.configurar_navegador()
@@ -69,10 +70,19 @@ if __name__ == "__main__":
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
         
         # Construir el nombre del archivo con la fecha
-        nombre_archivo = f"datos_{fecha_actual}.json"
+        nombre_archivo = "data/WindWuru/"f"datos_windwuru_{fecha_actual}.json"
 
         # Guardar en el archivo con el nombre construido
         with open(nombre_archivo, "w") as f:
             f.write(resultado_json)
 
         print(f"Datos guardados en el archivo {nombre_archivo}")
+        
+        
+        #https://www.meteocantabria.es/meteocantabria/mareas/view
+        
+        
+        
+        
+        
+        
