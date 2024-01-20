@@ -3,6 +3,15 @@ import datetime
 
 
 def crear_imagen(data):
+    """
+    Crea una imagen con datos meteorológicos en forma de tabla.
+
+    Parameters:
+    - data (dict): Diccionario de datos meteorológicos.
+
+    Returns:
+    - Image: Objeto de imagen creado.
+    """
     # Define los colores de la tabla y las fuentes de texto
     bg_color = (49, 68, 99)  # azul oscuro
     text_color = (255, 255, 255)  # blanco
@@ -47,5 +56,3 @@ def crear_imagen(data):
 
     # Devuelve la imagen
     return img
-
-

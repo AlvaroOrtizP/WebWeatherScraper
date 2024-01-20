@@ -3,6 +3,15 @@ import pytesseract
 from PIL import Image
 
 def extract_text_from_table(image_path):
+    """
+    Extrae texto de una tabla en una imagen.
+
+    Parameters:
+    - image_path (str): Ruta de la imagen.
+
+    Returns:
+    - str: Texto extraído de la tabla.
+    """
     # Leer la imagen con opencv
     image = cv2.imread(image_path)
 
@@ -26,6 +35,9 @@ def extract_text_from_table(image_path):
     return extracted_text
 
 if __name__ == "__main__":
+    print("------------------------------------------------------------------------------------------------")
+    print("EXTRACCIÓN DE TEXTO DE TABLA")
+    
     # Ruta de la captura de pantalla
     screenshot_path = "windguru_screenshot.png"
 
@@ -33,4 +45,8 @@ if __name__ == "__main__":
     extracted_text = extract_text_from_table(screenshot_path)
 
     # Imprimir el texto extraído
+    print("Texto extraído:")
     print(extracted_text)
+    
+    print("EXTRACCIÓN DE TEXTO COMPLETADA")
+    print("------------------------------------------------------------------------------------------------")

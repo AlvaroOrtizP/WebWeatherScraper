@@ -2,3 +2,4 @@ prettytable
 requests
 selenium
 pyautogui
+beautifulsoup4

@@ -1,9 +1,9 @@
 import json
 from io import BytesIO
-import generadorImagen
-import obtenerDatosWeb
+import Utils.GeneradorImagen
+import Utils.ObtenerDatosWeb
 import datetime
-#INICIO BOT 
+import sys 
 
 
 def crear_json_padre(datos):
@@ -40,19 +40,19 @@ DOM_TEMPERATURA_TIERRA = 'tabid_0_0_TMPE'
 
 
 def main():
-    driver = obtenerDatosWeb.configurar_navegador()
+    driver = Utils.ObtenerDatosWeb.configurar_navegador()
     url = 'https://www.windguru.cz/487006'
     print("Comienza la llamada")
     try:
-        html = obtenerDatosWeb.cargar_pagina(driver, url)
-        div = obtenerDatosWeb.encontrar_div(html)
+        html = Utils.ObtenerDatosWeb.cargar_pagina(driver, url)
+        div = Utils.ObtenerDatosWeb.encontrar_div(html)
         tr = div.find('tr', {'id': DOM_CABECERA})
-        resultados = obtenerDatosWeb.obtener_datos_cabecera(tr)    
+        resultados = Utils.ObtenerDatosWeb.obtener_datos_cabecera(tr)    
 
         datos = [resultados]
         filas = [DOM_V_VIENTO, DOM_RAFAGAS_VIENTO, DOM_OLA_ALTURA, DOM_PERIODO_OLAS, DOM_TEMPERATURA_TIERRA]
         for f in filas:
-            datos.append(obtenerDatosWeb.obtener_body(tr.find_next('tr', {'id': f})))
+            datos.append(Utils.ObtenerDatosWeb.obtener_body(tr.find_next('tr', {'id': f})))
 
         driver.quit()
         return crear_json_padre(datos)
@@ -62,6 +62,8 @@ def main():
         return None
 
 if __name__ == "__main__":
+    print("------------------------------------------------------------------------------------------------")
+    print("Comienza el proceso de WindWuLogger")
     # Ejecutar la función main y hacer algo con el resultado (por ejemplo, guardar en un archivo)
     resultado_json = main()
     
@@ -69,19 +71,20 @@ if __name__ == "__main__":
         # Obtener la fecha actual
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
         
+        # Obtener la ruta del directorio proporcionada por el usuario (si está disponible)
+        ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
+        
         # Construir el nombre del archivo con la fecha
-        nombre_archivo = "data/WindWuru/"f"datos_windwuru_{fecha_actual}.json"
+        nombre_archivo = f"{ruta_guardado}/data_buceo/WindWuru/datos_{fecha_actual}.json"
+        print(f"WindWuLogger: Se adjunta nombre al archivo {nombre_archivo}")
 
         # Guardar en el archivo con el nombre construido
         with open(nombre_archivo, "w") as f:
+            print("WindWuLogger se guarda el archivo")
             f.write(resultado_json)
 
-        print(f"Datos guardados en el archivo {nombre_archivo}")
-        
-        
-        #https://www.meteocantabria.es/meteocantabria/mareas/view
-        
-        
+        print(f"WIND_WU_LOGGER: Datos guardados en el archivo {nombre_archivo}")
+        print("------------------------------------------------------------------------------------------------")     
         
         
         

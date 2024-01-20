@@ -1,10 +1,30 @@
-# script_principal.py
+import sys
+import subprocess
+import time
 
-# Ejecutar windWuLogger.py
-exec(open('windWuLogger.py').read())
+wait_time = 15
+
+# Verificar si se proporcionó una ruta como argumento de línea de comandos
+if len(sys.argv) < 2:
+    print("Por favor, proporciona la ruta donde deseas guardar los datos.")
+    sys.exit(1)
+
+# Obtener la ruta proporcionada como argumento
+ruta_guardado = sys.argv[1]
+
+# Función para ejecutar un programa y manejar excepciones
+def ejecutar_programa(programa, *args):
+    try:
+        subprocess.run(["python", programa] + list(args), check=True)
+        time.sleep(wait_time)
+    except subprocess.CalledProcessError as e:
+        print(f"Error al ejecutar {programa}: {e}")
+
+# Ejecutar WindWuLogger.py
+ejecutar_programa("WindWuLogger.py", ruta_guardado)
 
 # Ejecutar TomarCapturaWindWuru.py
-exec(open('TomarCapturaWindWuru.py').read())
+ejecutar_programa("TomarCapturaWindWuru.py", ruta_guardado)
 
-# Ejecutar temperaturaLogger.py
-exec(open('temperaturaLogger.py').read())
+# Ejecutar TemperaturaLogger.py con la ruta como argumento
+ejecutar_programa("TemperaturaLogger.py", ruta_guardado)
