@@ -75,6 +75,3 @@ Ejemplo de JSON obtenido de AEMET:
   }
 ]
  ```
-
-Ejemplo de Captura de Pantalla de Windguru:
-![Imagen obtenida de Windguru](data/WindWuru/datos_2024_01_17.json)
