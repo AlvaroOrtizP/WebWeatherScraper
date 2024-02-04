@@ -47,6 +47,7 @@ def main():
         html = Utils.ObtenerDatosWeb.cargar_pagina(driver, url)
         div = Utils.ObtenerDatosWeb.encontrar_div(html)
         tr = div.find('tr', {'id': DOM_CABECERA})
+   
         resultados = Utils.ObtenerDatosWeb.obtener_datos_cabecera(tr)    
 
         datos = [resultados]
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
         
         # Construir el nombre del archivo con la fecha
-        nombre_archivo = f"{ruta_guardado}/data_buceo/WindWuru/datos_{fecha_actual}.json"
+        nombre_archivo = f"{ruta_guardado}data_buceo/WindWuru/datos_{fecha_actual}.json"
         print(f"WindWuLogger: Se adjunta nombre al archivo {nombre_archivo}")
 
         # Guardar en el archivo con el nombre construido

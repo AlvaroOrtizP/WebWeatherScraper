@@ -54,7 +54,7 @@ if __name__ == "__main__":
     ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
 
     # Construir el nombre del archivo con la fecha y hora
-    nombre_archivo = f"{ruta_guardado}/data_buceo/capturas/windguru_{fecha_actual}.png"
+    nombre_archivo = f"{ruta_guardado}data_buceo/capturas/windguru_{fecha_actual}.png"
 
     # Porcentaje de desplazamiento hacia abajo (ajustable)
     scroll_percent = 15

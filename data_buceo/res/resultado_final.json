@@ -1,0 +1,35 @@
+[
+  {
+    "fecha": "20240127",
+    "t_agua": "13",
+    "estado_cielo": {
+      "f1": "120",
+      "descripcion1": "muy nuboso",
+      "f2": "110",
+      "descripcion2": "nuboso"
+    },
+    "horas": {}
+  },
+  {
+    "fecha": "20240128",
+    "t_agua": "13",
+    "estado_cielo": {
+      "f1": "100",
+      "descripcion1": "despejado",
+      "f2": "120",
+      "descripcion2": "muy nuboso"
+    },
+    "horas": {}
+  },
+  {
+    "fecha": "20240129",
+    "t_agua": "13",
+    "estado_cielo": {
+      "f1": "120",
+      "descripcion1": "muy nuboso",
+      "f2": "120",
+      "descripcion2": "muy nuboso"
+    },
+    "horas": {}
+  }
+]

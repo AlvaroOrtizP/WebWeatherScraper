@@ -8,7 +8,7 @@ import re
 import datetime
 import time
 
-CANTIDAD_JSON = 20
+CANTIDAD_JSON = 100
 
 def configurar_navegador():
     """

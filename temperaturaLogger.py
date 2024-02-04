@@ -68,7 +68,7 @@ datos_aemet_por_dia = obtener_datos_aemet(url_aemet)
 fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
 
 # Construir el nombre del archivo con la fecha y la ruta proporcionada
-nombre_archivo = f"{ruta_guardado}/data_buceo/Aemet/datos_aemet_{fecha_actual}.json"
+nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{fecha_actual}.json"
 
 # Guardar los datos en un archivo JSON
 if datos_aemet_por_dia:

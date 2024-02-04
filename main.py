@@ -5,12 +5,12 @@ import time
 wait_time = 15
 
 # Verificar si se proporcionó una ruta como argumento de línea de comandos
-if len(sys.argv) < 2:
-    print("Por favor, proporciona la ruta donde deseas guardar los datos.")
-    sys.exit(1)
+#if len(sys.argv) < 2:
+ #   print("Por favor, proporciona la ruta donde deseas guardar los datos.")
+  #  sys.exit(1)
 
 # Obtener la ruta proporcionada como argumento
-ruta_guardado = sys.argv[1]
+#ruta_guardado = sys.argv[1]
 
 # Función para ejecutar un programa y manejar excepciones
 def ejecutar_programa(programa, *args):
@@ -21,10 +21,13 @@ def ejecutar_programa(programa, *args):
         print(f"Error al ejecutar {programa}: {e}")
 
 # Ejecutar WindWuLogger.py
-ejecutar_programa("WindWuLogger.py", ruta_guardado)
+ejecutar_programa("WindWuLogger.py")
 
 # Ejecutar TomarCapturaWindWuru.py
-ejecutar_programa("TomarCapturaWindWuru.py", ruta_guardado)
+ejecutar_programa("TomarCapturaWindWuru.py")
 
-# Ejecutar TemperaturaLogger.py con la ruta como argumento
-ejecutar_programa("TemperaturaLogger.py", ruta_guardado)
+# Ejecutar TemperaturaLogger.py 
+ejecutar_programa("TemperaturaLogger.py")
+
+# Ejecutar Mezclar.py 
+#ejecutar_programa("Mezclar.py")
