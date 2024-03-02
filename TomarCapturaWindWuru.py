@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 import datetime
 import sys 
+import json
 
 def capture_website_screenshot(url, screenshot_path, scroll_percent=15, wait_time=1):
     print("Iniciando captura de pantalla...")
@@ -36,22 +37,30 @@ def capture_website_screenshot(url, screenshot_path, scroll_percent=15, wait_tim
         print("Captura de pantalla exitosa.")
     except Exception as e:
         print(f"Error al capturar la pantalla: {e}")
+        return json.dumps({"error": str(e)})
     finally:
         # Cerrar el navegador, incluso si ocurre una excepción
         driver.quit()
         print("Navegador cerrado.")
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Por favor, proporciona el ID de la playa.")
+        sys.exit(1)
+        
     print("------------------------------------------------------------------------------------------------")
     print("TOMAR CAPTURA WIND WURU")
+    
+    id_playa = sys.argv[1]
+    
     # URL de la página web que deseas capturar
-    target_url = "https://www.windguru.cz/487006"
+    target_url = f'https://www.windguru.cz/{id_playa}'
     
     # Obtener la fecha y hora actual
     fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
 
     # Obtener la ruta del directorio proporcionada por el usuario (si está disponible)
-    ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
+    ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
 
     # Construir el nombre del archivo con la fecha y hora
     nombre_archivo = f"{ruta_guardado}data_buceo/capturas/windguru_{fecha_actual}.png"
@@ -60,7 +69,11 @@ if __name__ == "__main__":
     scroll_percent = 15
 
     # Capturar la pantalla de la web con desplazamiento hacia abajo
-    capture_website_screenshot(target_url, nombre_archivo, scroll_percent)
-    print(f"TOMAR_CAPTURA: Datos guardados correctamente en {nombre_archivo}")
+    resultado = capture_website_screenshot(target_url, nombre_archivo, scroll_percent)
+    if resultado:
+        print("Error al capturar la pantalla.")
+        with open(nombre_archivo.replace(".png", ".json"), "w") as f:
+            f.write(resultado)
+    else:
+        print(f"TOMAR_CAPTURA: Datos guardados correctamente en {nombre_archivo}")
     print("------------------------------------------------------------------------------------------------")
-

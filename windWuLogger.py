@@ -5,7 +5,6 @@ import Utils.ObtenerDatosWeb
 import datetime
 import sys 
 
-
 def crear_json_padre(datos):
     # Crea un objeto JSON a partir de los datos extraídos de la página
     horas, vientos, rafagas, olas_altura_datos, periodo_olas, temperaturas_tierra = datos
@@ -39,9 +38,9 @@ DOM_PERIODO_OLAS = 'tabid_0_0_PERPW'
 DOM_TEMPERATURA_TIERRA = 'tabid_0_0_TMPE'
 
 
-def main():
+def main(id_playa):
     driver = Utils.ObtenerDatosWeb.configurar_navegador()
-    url = 'https://www.windguru.cz/487006'
+    url = f'https://www.windguru.cz/{id_playa}'
     print("Comienza la llamada")
     try:
         html = Utils.ObtenerDatosWeb.cargar_pagina(driver, url)
@@ -60,33 +59,28 @@ def main():
     except Exception as e:
         print(f"Error al obtener los datos web: {e}")
         driver.quit()
-        return None
+        return json.dumps({"error": str(e)})
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Por favor, proporciona el ID de la playa.")
+        sys.exit(1)
+
     print("------------------------------------------------------------------------------------------------")
     print("Comienza el proceso de WindWuLogger")
-    # Ejecutar la función main y hacer algo con el resultado (por ejemplo, guardar en un archivo)
-    resultado_json = main()
+    
+    id_playa = sys.argv[1]
+    resultado_json = main(id_playa)
     
     if resultado_json:
-        # Obtener la fecha actual
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
-        
-        # Obtener la ruta del directorio proporcionada por el usuario (si está disponible)
-        ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
-        
-        # Construir el nombre del archivo con la fecha
+        ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
         nombre_archivo = f"{ruta_guardado}data_buceo/WindWuru/datos_{fecha_actual}.json"
         print(f"WindWuLogger: Se adjunta nombre al archivo {nombre_archivo}")
 
-        # Guardar en el archivo con el nombre construido
         with open(nombre_archivo, "w") as f:
             print("WindWuLogger se guarda el archivo")
             f.write(resultado_json)
 
         print(f"WIND_WU_LOGGER: Datos guardados en el archivo {nombre_archivo}")
-        print("------------------------------------------------------------------------------------------------")     
-        
-        
-        
-        
+        print("------------------------------------------------------------------------------------------------") 
