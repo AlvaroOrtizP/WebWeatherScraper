@@ -4,23 +4,23 @@ Este proyecto tiene como objetivo recopilar datos meteorológicos de dos fuentes
 # Ejecución
 Ejecución completa:
 ```bash
-python main.py <ruta_guardado>
+python Main.py <ruta_guardado> <indicador windwuru> <identificador playa aemet> 
 ```
 
 Ejecuciones parciales:
 
 ```bash
-python TemperaturaLogger.py <ruta_guardado>
+python TemperaturaLogger.py <identificador playa aemet> <ruta_guardado>
 ```
 
 
 ```bash
-python TomarCapturaWindWuru.py <ruta_guardado>
+python TomarCapturaWindWuru.py <indicador windwuru> <ruta_guardado>
 ```
 
 
 ```bash
-python WindWuLogger.py <ruta_guardado>
+python WindWuLogger.py <indicador windwuru> <ruta_guardado>
 ```
 
 
