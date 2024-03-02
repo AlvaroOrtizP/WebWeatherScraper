@@ -8,6 +8,13 @@ def obtener_datos_aemet(url):
     # Realizar la solicitud GET para obtener el contenido XML
     respuesta = requests.get(url)
     
+    
+    
+    #https://www.aemet.es/es/eltiempo/prediccion/municipios/noja-id39047
+    #Hacer tambien de esta
+    
+    
+    
     # Verificar si la solicitud fue exitosa (código 200)
     if respuesta.status_code == 200:
         # Parsear el contenido XML
