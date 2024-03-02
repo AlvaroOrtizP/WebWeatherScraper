@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='proyecto_python',
+    name='WebWeatherScraper',
     version='1.0',
     packages=find_packages(),
     entry_points={
@@ -14,6 +14,7 @@ setup(
     },
     install_requires=[
         'requests',
-        'selenium'
+        'selenium',
+        'setuptools',
     ],
 )
