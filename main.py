@@ -1,6 +1,17 @@
 import sys
 import subprocess
 import time
+import os
+
+# Función para crear directorios si no existen
+def crear_directorios(ruta):
+    carpetas = ["data_buceo/WindWuru", "data_buceo/Aemet", "data_buceo/capturas"]
+    for carpeta in carpetas:
+        ruta_carpeta = os.path.join(ruta, carpeta)
+        if not os.path.exists(ruta_carpeta):
+            os.makedirs(ruta_carpeta)
+            print(f"Directorio creado: {ruta_carpeta}")
+            
 
 wait_time = 15
 
@@ -11,6 +22,9 @@ if len(sys.argv) < 4:
 
 # Obtener la ruta proporcionada como argumento
 ruta_guardado = sys.argv[1]
+
+# Comprobar y crear directorios si no existen
+crear_directorios(ruta_guardado)
 
 # Obtener los valores específicos proporcionados como argumentos
 valor_especifico_windwulogger = sys.argv[2]
