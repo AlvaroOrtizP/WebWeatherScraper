@@ -2,6 +2,12 @@
 Este proyecto tiene como objetivo recopilar datos meteorológicos de dos fuentes: [Windguru](https://www.windguru.cz/) y la Agencia Estatal de Meteorología [AEMET](https://www.aemet.es/). Además, realiza capturas de pantalla de la web Windguru.
 
 # Ejecución
+
+Ejecucion previa dentro del directorio donde se encuentra el archivo:
+```bash
+pip install .
+```
+
 Ejecución completa:
 ```bash
 python Main.py <ruta_guardado> <indicador windwuru> <identificador playa aemet> 
