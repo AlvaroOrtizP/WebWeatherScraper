@@ -4,7 +4,7 @@ import json
 import datetime
 import sys  
 
-def obtener_datos_aemet(url):
+def obtener_datos_aemet(url, id_playa):
     respuesta = requests.get(url)
     
     if respuesta.status_code == 200:
@@ -12,6 +12,7 @@ def obtener_datos_aemet(url):
         datos_por_dia = []
         
         for dia_elem in arbol.findall(".//dia"):
+            
             fecha = dia_elem.attrib.get("fecha", "")
             t_agua = dia_elem.find(".//t_agua").attrib.get("valor1", "")
             
@@ -24,6 +25,7 @@ def obtener_datos_aemet(url):
             }
             
             datos_dia = {
+                "id_playa" : id_playa,
                 "fecha": fecha,
                 "t_agua": t_agua,
                 "estado_cielo": estado_cielo_data
@@ -54,7 +56,7 @@ if __name__ == "__main__":
 
     ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
 
-    datos_aemet_por_dia = obtener_datos_aemet(url_aemet)
+    datos_aemet_por_dia = obtener_datos_aemet(url_aemet, id_playa)
 
     fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
     nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{fecha_actual}.json"

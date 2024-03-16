@@ -10,7 +10,7 @@ pip install .
 
 Ejecución completa:
 ```bash
-python Main.py <ruta_guardado> <indicador windwuru> <identificador playa aemet> 
+python Main.py <persistencia> <ruta_guardado> <indicador windwuru> <identificador playa aemet> 
 ```
 
 Ejecuciones parciales:

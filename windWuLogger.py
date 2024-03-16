@@ -5,7 +5,7 @@ import Utils.ObtenerDatosWeb
 import datetime
 import sys 
 
-def crear_json_padre(datos):
+def crear_json_padre(datos, id_playa):
     # Crea un objeto JSON a partir de los datos extraídos de la página
     horas, vientos, rafagas, olas_altura_datos, periodo_olas, temperaturas_tierra = datos
     resultado = {}
@@ -19,6 +19,8 @@ def crear_json_padre(datos):
         temperatura_tierra = temperaturas_tierra[i]
 
         resultado[json.dumps(hora)] = {
+            "id_playa" : id_playa,
+            "fecha": hora,
             "viento": viento,
             "rafagas": rafaga,
             "olas_altura": ola_altura,
@@ -55,7 +57,7 @@ def main(id_playa):
             datos.append(Utils.ObtenerDatosWeb.obtener_body(tr.find_next('tr', {'id': f})))
 
         driver.quit()
-        return crear_json_padre(datos)
+        return crear_json_padre(datos, id_playa)
     except Exception as e:
         print(f"Error al obtener los datos web: {e}")
         driver.quit()
