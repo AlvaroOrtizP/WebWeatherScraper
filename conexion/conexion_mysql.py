@@ -4,9 +4,9 @@ import mysql.connector
 def conectar():
     # Detalles de conexión
     host = "localhost"
-    user = "XXXXXXX"
-    password = "XXXXXXX"
-    database = "XXXXXXX"
+    user = "deepdiverecord"
+    password = "deepdiverecord"
+    database = "deepdiverecord"
 
     # Conexión a la base de datos
     try:
