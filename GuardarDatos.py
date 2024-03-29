@@ -1,7 +1,8 @@
 import os
 import json
-import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+import sys
 from conexion.conexion_mysql import conectar
 
 class ProcesadorDatos:
@@ -26,6 +27,16 @@ class ProcesadorDatos:
 
         cursor.close()
 
+    def procesar_viento(self):
+        cursor = self.conn.cursor()
+        directorio = "./data_buceo/viento/"
+        
+
+        self.procesar_directorio_viento(cursor, directorio)
+
+        
+        cursor.close()
+
     def procesar_directorio_windwuru(self, cursor, directorio):
         for filename in os.listdir(directorio):
             if filename.endswith(".json"):
@@ -38,7 +49,7 @@ class ProcesadorDatos:
                 mes = partes_nombre[2].lstrip("0")
                 dia = partes_nombre[3].split(".")[0]
                 horaAuxiliar = 0
-                fecha_inicial = datetime.datetime(int(año), int(mes), int(dia))
+                fecha_inicial = datetime(int(año), int(mes), int(dia))
 
                 with open(ruta_json) as f:
                     datos = json.load(f)
@@ -102,10 +113,43 @@ class ProcesadorDatos:
                 
                 self.conn.commit()
                 os.remove(ruta_json)
+    
+    def procesar_directorio_viento(self, cursor, directorio):
+        lugar = sys.argv[1]
+        for filename in os.listdir(directorio):
+            if filename.endswith(".json"):
+                ruta_json = os.path.join(directorio, filename)
+                                                    
+                with open(ruta_json) as f:
+                    try:
+                        datos = json.load(f)
+                        if "timelines" in datos and "hourly" in datos["timelines"]:
+                            hourly_data = datos["timelines"]["hourly"]
+                            for hourly_entry in hourly_data:
+                                time_value = hourly_entry["time"]
+                                año = int(time_value[:4])
+                                mes = int(time_value[5:7].lstrip("0"))
+                                dia = int(time_value[8:10].lstrip("0"))
+                                hora = time_value[11:13]
+                                wind_direction = hourly_entry["values"]["windDirection"]
 
-        self.conn.close()
+                                sql = "UPDATE windconditions SET wind_direction = " + str(wind_direction) + " WHERE year = " + str(año) + " and month = " + str(mes) + " and day = " + str(dia) + " and site = '" + lugar + "' and time_of_day = " + hora + ""                                            
+                                cursor.execute(sql)
+
+                    except Exception as e:
+                        print("Error:", e)
+                        continue  # Si hay un error, continuamos con el siguiente archivo
+
+                    self.conn.commit()
+                    
+                    # Eliminar el archivo solo si no hay errores
+                    f.close()  # Cerrar el archivo antes de intentar eliminarlo
+                    os.remove(ruta_json)
+    
+
 
 # Uso de la clase
 procesador = ProcesadorDatos()
 procesador.procesar_windwuru()
 procesador.procesar_aemet()
+procesador.procesar_viento()

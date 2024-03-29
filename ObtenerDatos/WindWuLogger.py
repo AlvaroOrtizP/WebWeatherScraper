@@ -1,7 +1,6 @@
 import json
 from io import BytesIO
-import Utils.GeneradorImagen
-import Utils.ObtenerDatosWeb
+from Utils import ObtenerDatosWeb
 import datetime
 import sys 
 
@@ -41,20 +40,20 @@ DOM_TEMPERATURA_TIERRA = 'tabid_0_0_TMPE'
 
 
 def main(id_playa):
-    driver = Utils.ObtenerDatosWeb.configurar_navegador()
+    driver = ObtenerDatosWeb.configurar_navegador()
     url = f'https://www.windguru.cz/{id_playa}'
     print("Comienza la llamada")
     try:
-        html = Utils.ObtenerDatosWeb.cargar_pagina(driver, url)
-        div = Utils.ObtenerDatosWeb.encontrar_div(html)
+        html = ObtenerDatosWeb.cargar_pagina(driver, url)
+        div = ObtenerDatosWeb.encontrar_div(html)
         tr = div.find('tr', {'id': DOM_CABECERA})
    
-        resultados = Utils.ObtenerDatosWeb.obtener_datos_cabecera(tr)    
+        resultados = ObtenerDatosWeb.obtener_datos_cabecera(tr)    
 
         datos = [resultados]
         filas = [DOM_V_VIENTO, DOM_RAFAGAS_VIENTO, DOM_OLA_ALTURA, DOM_PERIODO_OLAS, DOM_TEMPERATURA_TIERRA]
         for f in filas:
-            datos.append(Utils.ObtenerDatosWeb.obtener_body(tr.find_next('tr', {'id': f})))
+            datos.append(ObtenerDatosWeb.obtener_body(tr.find_next('tr', {'id': f})))
 
         driver.quit()
         return crear_json_padre(datos, id_playa)

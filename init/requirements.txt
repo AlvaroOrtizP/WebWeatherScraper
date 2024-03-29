@@ -4,4 +4,6 @@ selenium
 pyautogui
 beautifulsoup4
 mysql-connector-python
+easyocr
+geopy
 
