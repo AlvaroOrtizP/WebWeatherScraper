@@ -9,13 +9,23 @@ pip install .
 ```
 
 Ejecución completa:
-```bash
-python .\Main.py <indicador windwuru> <identificador playa aemet>
-```
-```bash
-python .\Main.py 487006 play_v2_3900602
-```
 
+* Ejecucion inicial
+
+```bash
+python .\Main.py <indicador windwuru> <identificador playa aemet> <lugar de geolocalizacion>
+```
+```bash
+python .\Main.py 487006 play_v2_3900602 Ajo,Cantabria
+```
+* Guardar los datos
+
+```bash
+python .\GuardarDatos.py 487006
+```
+```bash
+python .\GuardarDatos.py <indicador windwuru>
+```
 Ejecuciones parciales:
 
 ```bash
@@ -31,7 +41,9 @@ python TomarCapturaWindWuru.py <indicador windwuru>
 ```bash
 python WindWuLogger.py <indicador windwuru>
 ```
-
+```bash
+python ObtenerDireccionViento.py <lugar de geolocalizacion>
+```
 
 # Datos Obtenidos
 Ejemplo de JSON obtenido de Windguru:
