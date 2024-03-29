@@ -89,6 +89,48 @@ Ejemplo de JSON obtenido de AEMET:
 ]
  ```
 
+
+Ejemplo de JSON obtenido de tomorrow (viento):
+
+ ```json
+{
+    "timelines": {
+       "hourly": [
+                  {
+                "time": "2024-03-29T20:00:00Z",
+                "values": {
+                    "cloudBase": 0.15,
+                    "cloudCeiling": 0.15,
+                    "cloudCover": 100,
+                    "dewPoint": 8.31,
+                    "freezingRainIntensity": 0,
+                    "humidity": 92,
+                    "iceAccumulation": 0,
+                    "iceAccumulationLwe": 0,
+                    "precipitationProbability": 20,
+                    "pressureSurfaceLevel": 993.84,
+                    "rainAccumulation": 0.98,
+                    "rainAccumulationLwe": 0.39,
+                    "rainIntensity": 0.32,
+                    "sleetAccumulation": 0,
+                    "sleetAccumulationLwe": 0,
+                    "sleetIntensity": 0,
+                    "snowAccumulation": 0,
+                    "snowAccumulationLwe": 0,
+                    "snowIntensity": 0,
+                    "temperature": 9.5,
+                    "temperatureApparent": 9.5,
+                    "uvHealthConcern": 0,
+                    "uvIndex": 0,
+                    "visibility": 6.35,
+                    "weatherCode": 4000,
+                    "windDirection": 235.38,
+                    "windGust": 1.81,
+                    "windSpeed": 0.88
+                }
+            },
+ ```
+
 Ejemplo de captura de pantalla
-![Captura de Pantalla de Windguru](data_buceo/capturas/windguru_2024_03_16_23_21.png)
+![Captura de Pantalla de Windguru](data_buceo/capturas/windguru_2024_03_29_16_25.png)
 
