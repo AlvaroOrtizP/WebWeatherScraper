@@ -80,7 +80,6 @@ class ProcesadorDatos:
                             
                             fecha_inicial += relativedelta(months=0)
                             fecha_inicial = fecha_inicial.replace(day=1)
-                        print(f"{fecha_inicial} - fecha_inicial"  )
 
                         site  = dato["id_playa"]    
                         dia = partes_fecha[0]
