@@ -19,15 +19,16 @@ def obtener_pronostico_clima(latitud, longitud, api_key):
         print("Error al conectarse a la API:", e)
         return None
 
-def main(lugar):
+def main(lugar, ruta_guardado):
     api_key = "PFodxGivcZJFGhZdPSh9R9mwLWIGXMpH"
     latitud, longitud = BuscarGeolocalizacion.obtener_coordenadas_lugar(lugar)
     pronostico = obtener_pronostico_clima(latitud, longitud, api_key)
     if pronostico:
         print("Pronóstico del clima obtenido con éxito:")
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
-        ruta_guardado = sys.argv[1] if len(sys.argv) > 1 else ""
-        nombre_archivo = f"data_buceo/viento/datos_{fecha_actual}.json"
+
+        nombre_archivo = f"{ruta_guardado}data_buceo/viento/datos_aemet_{fecha_actual}.json"
+
         print(f"ObtenerDireccionViento: Se adjunta nombre al archivo {nombre_archivo}")
 
         with open(nombre_archivo, "w") as f:
@@ -39,10 +40,12 @@ def main(lugar):
         print("No se pudo obtener el pronóstico del clima.")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 1:
-        print("Por favor, proporciona el ID de la playa.")
+    if len(sys.argv) < 2:
+        print("Por favor, proporciona el lugar del viento")
         sys.exit(1)
     print("------------------------------------------------------------------------------------------------")
     print("Comienza el proceso de ObtenerDireccionViento")
     lugar = sys.argv[1]
-    main(lugar)
+    ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
+    
+    main(lugar, ruta_guardado)
