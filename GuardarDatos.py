@@ -15,6 +15,9 @@ class ProcesadorDatos:
         cursor = self.conn.cursor()
 
         directorio = "./data_buceo/WindWuru/"
+        if len(sys.argv) > 2:
+            ruta = sys.argv[2]
+            directorio = f"{ruta}/data_buceo/WindWuru/"   
         self.procesar_directorio_windwuru(cursor, directorio)
 
         cursor.close()
@@ -23,6 +26,9 @@ class ProcesadorDatos:
         cursor = self.conn.cursor()
 
         directorio = "./data_buceo/Aemet/"
+        if len(sys.argv) > 2:
+            ruta = sys.argv[2]
+            directorio = f"{ruta}/data_buceo/Aemet/"   
         self.procesar_directorio_aemet(cursor, directorio)
 
         cursor.close()
@@ -30,6 +36,11 @@ class ProcesadorDatos:
     def procesar_viento(self):
         cursor = self.conn.cursor()
         directorio = "./data_buceo/viento/"
+        if len(sys.argv) > 2:
+            ruta = sys.argv[2]
+            directorio = f"{ruta}/data_buceo/viento/"   
+      
+        
         
 
         self.procesar_directorio_viento(cursor, directorio)
@@ -67,9 +78,9 @@ class ProcesadorDatos:
                         #Aumento de mes
                         if int(dia) > int(partes_fecha[0]):
                             
-                            fecha_inicial += relativedelta(months=1)
+                            fecha_inicial += relativedelta(months=0)
                             fecha_inicial = fecha_inicial.replace(day=1)
-
+                        print(f"{fecha_inicial} - fecha_inicial"  )
 
                         site  = dato["id_playa"]    
                         dia = partes_fecha[0]
