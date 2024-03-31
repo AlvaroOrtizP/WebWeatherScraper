@@ -144,5 +144,5 @@ Ejemplo de JSON obtenido de tomorrow (viento):
  ```
 
 Ejemplo de captura de pantalla
-![Captura de Pantalla de Windguru](data_buceo/capturas/windguru_2024_03_29_16_25.png)
+![Captura de Pantalla de Windguru](data_buceo/capturas/windguru_2024_03_30_19_47.png)
 
