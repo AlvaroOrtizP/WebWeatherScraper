@@ -21,10 +21,10 @@ python .\Main.py 487006 play_v2_3900602 Ajo,Cantabria
 * Guardar los datos
 
 ```bash
-python .\GuardarDatos.py 487006
+python .\GuardarDatos.py 487006 C/....
 ```
 ```bash
-python .\GuardarDatos.py <indicador windwuru>
+python .\GuardarDatos.py <indicador windwuru> <ruta donde se encuentran data_buceo>
 ```
 Ejecuciones parciales:
 
