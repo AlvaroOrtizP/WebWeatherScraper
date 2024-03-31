@@ -18,9 +18,14 @@ class ProcesadorDatos:
         if len(sys.argv) > 2:
             ruta = sys.argv[2]
             directorio = f"{ruta}/data_buceo/WindWuru/"   
-        self.procesar_directorio_windwuru(cursor, directorio)
 
-        cursor.close()
+        try:
+            self.procesar_directorio_windwuru(cursor, directorio)
+            cursor.close()
+            return "OK"  # Retorna éxito si se procesa sin errores
+        except Exception as e:
+            cursor.close()
+            return f"NOK: Error en procesar_windwuru: {str(e)}"  # Retorna el error si ocurre alguno
 
     def procesar_aemet(self):
         cursor = self.conn.cursor()
@@ -29,9 +34,14 @@ class ProcesadorDatos:
         if len(sys.argv) > 2:
             ruta = sys.argv[2]
             directorio = f"{ruta}/data_buceo/Aemet/"   
-        self.procesar_directorio_aemet(cursor, directorio)
 
-        cursor.close()
+        try:
+            self.procesar_directorio_aemet(cursor, directorio)
+            cursor.close()
+            return "OK"  # Retorna éxito si se procesa sin errores
+        except Exception as e:
+            cursor.close()
+            return f"NOK: Error en procesar_aemet: {str(e)}"  # Retorna el error si ocurre alguno
 
     def procesar_viento(self):
         cursor = self.conn.cursor()
@@ -39,14 +49,14 @@ class ProcesadorDatos:
         if len(sys.argv) > 2:
             ruta = sys.argv[2]
             directorio = f"{ruta}/data_buceo/viento/"   
-      
-        
-        
 
-        self.procesar_directorio_viento(cursor, directorio)
-
-        
-        cursor.close()
+        try:
+            self.procesar_directorio_viento(cursor, directorio)
+            cursor.close()
+            return "OK"  # Retorna éxito si se procesa sin errores
+        except Exception as e:
+            cursor.close()
+            return f"NOK: Error en procesar_viento: {str(e)}"  # Retorna el error si ocurre alguno
 
     def procesar_directorio_windwuru(self, cursor, directorio):
         for filename in os.listdir(directorio):
@@ -64,7 +74,6 @@ class ProcesadorDatos:
 
                 with open(ruta_json) as f:
                     datos = json.load(f)
-                    print("ruta json: " + ruta_json)
                     for clave, dato in datos.items():
                         fecha = dato["fecha"]
                         partes_fecha = fecha.split(".")
@@ -155,11 +164,18 @@ class ProcesadorDatos:
                     # Eliminar el archivo solo si no hay errores
                     f.close()  # Cerrar el archivo antes de intentar eliminarlo
                     os.remove(ruta_json)
-    
 
 
 # Uso de la clase
 procesador = ProcesadorDatos()
-procesador.procesar_windwuru()
-procesador.procesar_aemet()
-procesador.procesar_viento()
+resultado_windwuru = procesador.procesar_windwuru()
+resultado_aemet = procesador.procesar_aemet()
+resultado_viento = procesador.procesar_viento()
+
+if "NOK" in resultado_windwuru or "NOK" in resultado_aemet or "NOK" in resultado_viento:
+    print("Al menos un proceso falló:")
+    print(resultado_windwuru)
+    print(resultado_aemet)
+    print(resultado_viento)
+else:
+    print("OK")
