@@ -25,24 +25,29 @@ python .\GuardarDatos.py 487006 C/....
 ```
 ```bash
 python .\GuardarDatos.py <indicador windwuru> <ruta donde se encuentran data_buceo>
+Nota: el segundo no es necesario si se dejo por defecto
 ```
 Ejecuciones parciales:
 
 ```bash
-python TemperaturaLogger.py <identificador playa aemet>
+python TemperaturaLogger.py <identificador playa aemet> <ruta donde se encuentran data_buceo>
+Nota: el segundo no es necesario si se dejo por defecto
 ```
 
 
 ```bash
-python TomarCapturaWindWuru.py <indicador windwuru>
+python TomarCapturaWindWuru.py <indicador windwuru>  <ruta donde se encuentran data_buceo>
+Nota: el segundo no es necesario si se dejo por defecto
 ```
 
 
 ```bash
-python WindWuLogger.py <indicador windwuru>
+python WindWuLogger.py <indicador windwuru>  <ruta donde se encuentran data_buceo>
+Nota: el segundo no es necesario si se dejo por defecto
 ```
 ```bash
-python ObtenerDireccionViento.py <lugar de geolocalizacion>
+python ObtenerDireccionViento.py <lugar de geolocalizacion>  <ruta donde se encuentran data_buceo>
+Nota: el segundo no es necesario si se dejo por defecto
 ```
 
 # Datos Obtenidos
