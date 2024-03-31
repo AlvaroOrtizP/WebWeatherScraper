@@ -74,6 +74,7 @@ class ProcesadorDatos:
 
                 with open(ruta_json) as f:
                     datos = json.load(f)
+                    print("ruta json: " + ruta_json)
                     for clave, dato in datos.items():
                         fecha = dato["fecha"]
                         partes_fecha = fecha.split(".")
@@ -173,6 +174,7 @@ resultado_aemet = procesador.procesar_aemet()
 resultado_viento = procesador.procesar_viento()
 
 if "NOK" in resultado_windwuru or "NOK" in resultado_aemet or "NOK" in resultado_viento:
+    print("Al menos un proceso falló:")
     print(resultado_windwuru)
     print(resultado_aemet)
     print(resultado_viento)
