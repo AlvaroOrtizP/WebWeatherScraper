@@ -4,7 +4,7 @@ import json
 import datetime
 import sys  
 
-def obtener_datos_aemet(url, id_playa):
+def obtener_datos_aemet(url, id_playa, id_lugar):
     respuesta = requests.get(url)
     
     if respuesta.status_code == 200:
@@ -25,6 +25,7 @@ def obtener_datos_aemet(url, id_playa):
             }
             
             datos_dia = {
+                "id_lugar" : id_lugar,
                 "id_playa" : id_playa,
                 "fecha": fecha,
                 "t_agua": t_agua,
@@ -43,20 +44,21 @@ def guardar_json(datos, nombre_archivo):
         json.dump(datos, archivo, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Por favor, proporciona el ID de la playa.")
+    if len(sys.argv) < 3:
+        print("Por favor, proporciona el ID de la playa y el id del lugar.")
         sys.exit(1)
 
     print("------------------------------------------------------------------------------------------------")
     print("TEMPERATURA LOGGER")
 
     id_playa = sys.argv[1]
+    id_lugar = sys.argv[2]
 
     url_aemet = f"https://www.aemet.es/xml/playas/{id_playa}.xml"
 
-    ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
+    ruta_guardado = sys.argv[3] if len(sys.argv) > 3 else ""
 
-    datos_aemet_por_dia = obtener_datos_aemet(url_aemet, id_playa)
+    datos_aemet_por_dia = obtener_datos_aemet(url_aemet, id_playa, id_lugar)
 
     fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
     nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{fecha_actual}.json"

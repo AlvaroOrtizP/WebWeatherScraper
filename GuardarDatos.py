@@ -74,7 +74,6 @@ class ProcesadorDatos:
 
                 with open(ruta_json) as f:
                     datos = json.load(f)
-                    print("ruta json: " + ruta_json)
                     for clave, dato in datos.items():
                         fecha = dato["fecha"]
                         partes_fecha = fecha.split(".")
@@ -126,10 +125,16 @@ class ProcesadorDatos:
                         descripcion1 = estado_cielo["descripcion1"]
                         f2 = estado_cielo["f2"]
                         descripcion2 = estado_cielo["descripcion2"]
+                        id_lugar = dato["id_lugar"]
                             
-                        sql = "INSERT INTO weatherdata (year, month, day, site, water_termperature, f1, descripcion1, f2, descripcion2) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE year=VALUES(year), month=VALUES(month), day=VALUES(day), site=VALUES(site), water_termperature=VALUES(water_termperature), f1=VALUES(f1), descripcion1=VALUES(descripcion1), f2=VALUES(f2), descripcion2=VALUES(descripcion2)"
-                        val = (año, mes, dia, id_playa, t_agua, f1, descripcion1, f2, descripcion2)                            
+                        sql = "UPDATE windconditions SET water_termperature=%s, condition_code=%s, descripcion_condition=%s WHERE year=%s AND month=%s AND day=%s AND site=%s AND time_of_day < '14'"
+                        val = (t_agua, f1, descripcion1, año, mes, dia, id_lugar)
                         cursor.execute(sql, val)
+
+                        sql = "UPDATE windconditions SET water_termperature=%s, condition_code=%s, descripcion_condition=%s WHERE year=%s AND month=%s AND day=%s AND site=%s AND time_of_day > '14'"
+                        val = (t_agua, f2, descripcion2, año, mes, dia, id_lugar)
+                        cursor.execute(sql, val)
+
                 
                 self.conn.commit()
                 os.remove(ruta_json)
@@ -154,6 +159,7 @@ class ProcesadorDatos:
                                 wind_direction = hourly_entry["values"]["windDirection"]
 
                                 sql = "UPDATE windconditions SET wind_direction = " + str(wind_direction) + " WHERE year = " + str(año) + " and month = " + str(mes) + " and day = " + str(dia) + " and site = '" + lugar + "' and time_of_day = " + hora + ""                                            
+                                print("CONSULTA " + sql)
                                 cursor.execute(sql)
 
                     except Exception as e:

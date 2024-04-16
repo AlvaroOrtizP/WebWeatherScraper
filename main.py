@@ -45,7 +45,7 @@ def ejecutar_programa(programa, *args):
 ejecutar_programa("ObtenerDatos/WindWuLogger.py", valor_especifico_windwulogger)
 
 # Ejecutar TemperaturaLogger.py con el valor específico proporcionado
-ejecutar_programa("ObtenerDatos/TemperaturaLogger.py", valor_especifico_temperaturalogger)
+ejecutar_programa("ObtenerDatos/TemperaturaLogger.py", valor_especifico_temperaturalogger, valor_especifico_windwulogger)
 
 # Ejecutar TomarCapturaWindWuru.py
 ejecutar_programa("ObtenerDatos/TomarCapturaWindWuru.py", valor_especifico_windwulogger)

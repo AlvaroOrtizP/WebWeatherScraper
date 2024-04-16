@@ -27,7 +27,7 @@ def main(lugar, ruta_guardado):
         print("Pronóstico del clima obtenido con éxito:")
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
 
-        nombre_archivo = f"{ruta_guardado}data_buceo/viento/datos_aemet_{fecha_actual}.json"
+        nombre_archivo = f"{ruta_guardado}data_buceo/viento/datos_viento{fecha_actual}.json"
 
         print(f"ObtenerDireccionViento: Se adjunta nombre al archivo {nombre_archivo}")
 
