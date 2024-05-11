@@ -52,18 +52,22 @@ if __name__ == "__main__":
     print("TEMPERATURA LOGGER")
 
     id_playa = sys.argv[1]
-    id_lugar = sys.argv[2]
+    id_lugar = sys.argv[3]
 
     url_aemet = f"https://www.aemet.es/xml/playas/{id_playa}.xml"
 
-    ruta_guardado = sys.argv[3] if len(sys.argv) > 3 else ""
-
+    ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
+    print("PRUEBA 1", sys.argv[1])
+    print("PRUEBA 2", sys.argv[2])
+    print("PRUEBA 3", sys.argv[3])
     datos_aemet_por_dia = obtener_datos_aemet(url_aemet, id_playa, id_lugar)
 
     fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
     nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{fecha_actual}.json"
 
     if datos_aemet_por_dia:
+        
+
         guardar_json(datos_aemet_por_dia, nombre_archivo)
         print(f"TEMPERATURA_LOGGER: Datos guardados correctamente en {nombre_archivo}")
     print("------------------------------------------------------------------------------------------------")
