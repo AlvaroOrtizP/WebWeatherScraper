@@ -3,6 +3,86 @@ from io import BytesIO
 from Utils import ObtenerDatosWeb
 import datetime
 import sys 
+from dateutil.relativedelta import relativedelta
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from conexion.conexion_mysql import conectar
+
+class ProcesadorDatos:
+    def __init__(self):
+        self.conn = conectar()
+        if self.conn is None:
+            exit()
+    
+    def procesar_directorio_windwuru(self, cursor, directorio):
+        for filename in os.listdir(directorio):
+            if filename.endswith(".json"):
+                ruta_json = os.path.join(directorio, filename)
+
+                nombre_archivo = os.path.basename(filename)
+                partes_nombre = nombre_archivo.split("_")
+
+                año = partes_nombre[1]
+                mes = partes_nombre[2].lstrip("0")
+                dia = partes_nombre[3].split(".")[0]
+                horaAuxiliar = 0
+                fecha_inicial = datetime.datetime(int(año), int(mes), int(dia))
+
+                with open(ruta_json) as f:
+                    datos = json.load(f)
+                    for clave, dato in datos.items():
+                        fecha = dato["fecha"]
+                        partes_fecha = fecha.split(".")
+                        hora = partes_fecha[1].split("h")[0]
+                        #Aumento de dia
+                        if horaAuxiliar > int(hora):
+                            # Si la hora actual es menor que la hora anterior, se aumenta el día
+                            fecha_inicial += relativedelta(days=1)
+
+                        horaAuxiliar = int(hora)
+                        #Aumento de mes
+                        if int(dia) > int(partes_fecha[0]):
+                            fecha_inicial += relativedelta(months=0)
+                            fecha_inicial = fecha_inicial.replace(day=1)
+
+                        site = dato["id_playa"]    
+                        dia = partes_fecha[0]
+                        hora = partes_fecha[1].split("h")[0]
+                        viento = dato["viento"]
+                        rafagas = dato["rafagas"]
+                        olas_altura = dato["olas_altura"]
+                        periodo_olas = dato["periodo_olas"]
+                        temperatura_tierra = dato["temperatura_tierra"]
+
+                        sql = ("INSERT INTO wind_conditions (year, month, day, site, time_of_day, wind, gusts_of_wind, "
+                               "wave_height, wave_period, earth_temperature) "
+                               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+                               "ON DUPLICATE KEY UPDATE year=VALUES(year), month=VALUES(month), day=VALUES(day), "
+                               "site=VALUES(site), time_of_day=VALUES(time_of_day), wind=VALUES(wind), "
+                               "gusts_of_wind=VALUES(gusts_of_wind), wave_height=VALUES(wave_height), "
+                               "wave_period=VALUES(wave_period), earth_temperature=VALUES(earth_temperature)")
+                        val = (fecha_inicial.year, fecha_inicial.month, fecha_inicial.day, site, hora, viento, rafagas,
+                               olas_altura, periodo_olas, temperatura_tierra)
+                        cursor.execute(sql, val)
+
+                self.conn.commit()
+                os.remove(ruta_json)
+
+    def procesar_windwuru(self):
+        cursor = self.conn.cursor()
+
+        directorio = "./data_buceo/WindWuru/"
+        if len(sys.argv) > 2:
+            ruta = sys.argv[2]
+            directorio = f"{ruta}/data_buceo/WindWuru/"   
+
+        try:
+            self.procesar_directorio_windwuru(cursor, directorio)
+            cursor.close()
+            return "OK"  # Retorna éxito si se procesa sin errores
+        except Exception as e:
+            cursor.close()
+            return f"NOK: Error en procesar_windwuru: {str(e)}"  # Retorna el error si ocurre alguno
 
 def crear_json_padre(datos, id_playa):
     # Crea un objeto JSON a partir de los datos extraídos de la página
@@ -29,7 +109,6 @@ def crear_json_padre(datos, id_playa):
 
     return json.dumps(resultado)
 
-
 # ID de los elementos HTML que se van a buscar en la página
 DOM_CABECERA = 'tabid_0_0_dates'
 DOM_V_VIENTO = 'tabid_0_0_WINDSPD'
@@ -37,7 +116,6 @@ DOM_RAFAGAS_VIENTO = 'tabid_0_0_GUST'
 DOM_OLA_ALTURA = 'tabid_0_0_HTSGW'
 DOM_PERIODO_OLAS = 'tabid_0_0_PERPW'
 DOM_TEMPERATURA_TIERRA = 'tabid_0_0_TMPE'
-
 
 def main(id_playa):
     driver = ObtenerDatosWeb.configurar_navegador()
@@ -47,7 +125,7 @@ def main(id_playa):
         html = ObtenerDatosWeb.cargar_pagina(driver, url)
         div = ObtenerDatosWeb.encontrar_div(html)
         tr = div.find('tr', {'id': DOM_CABECERA})
-   
+
         resultados = ObtenerDatosWeb.obtener_datos_cabecera(tr)    
 
         datos = [resultados]
@@ -84,4 +162,6 @@ if __name__ == "__main__":
             f.write(resultado_json)
 
         print(f"WIND_WU_LOGGER: Datos guardados en el archivo {nombre_archivo}")
-        print("------------------------------------------------------------------------------------------------") 
+        procesador = ProcesadorDatos()
+        resultado_windwuru = procesador.procesar_windwuru()
+        print("------------------------------------------------------------------------------------------------")

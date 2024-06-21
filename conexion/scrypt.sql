@@ -22,3 +22,13 @@ CREATE TABLE `windconditions` (
 ALTER TABLE `windconditions`
   ADD PRIMARY KEY (`year`,`month`,`day`,`time_of_day`,`site`);
 COMMIT;
+
+CREATE TABLE `configuration_data` (
+  `id` int(11) NOT NULL,
+  `ID_WINDWURU` int(11) NOT NULL,
+  `ID_AEMET` varchar(30) NOT NULL,
+  `ID_PLAYA` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `configuration_data`
+  ADD PRIMARY KEY (`id`);
