@@ -80,6 +80,12 @@ python ObtenerDireccionViento.py <lugar de geolocalizacion>  <ruta donde se encu
 Nota: el segundo no es necesario si se dejo por defecto
 ```
 
+```python
+python ObtenerFasesLunares.py <lugar>  <ruta donde se encuentran data_buceo>
+Nota: lugar es el indicador con el cual se guardara en la base de datos, Ejemplo: Ajo,Cantabria
+Nota: el segundo no es necesario si se dejo por defecto
+```
+
 
 # Datos Obtenidos
 Ejemplo de JSON obtenido de Windguru:
