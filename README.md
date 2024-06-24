@@ -4,7 +4,7 @@ Este proyecto tiene como objetivo recopilar datos meteorológicos de dos fuentes
 
 
 # La versión de V2.1.0
-
+En esta versión se implementa el guardado en la base de datos directamente en cada scrypt, ademas se añade la obtencion de datos iniciales
 
 # Archivos configuración
 
@@ -52,7 +52,7 @@ python .\GuardarDatos.py <indicador windwuru> <ruta donde se encuentran data_buc
 ```
 Nota: el segundo no es necesario si se dejo por defecto
 
-- Ejecución inicial (opción obtener datos de la configuración)
+- Ejecución inicial (opción obtener datos de la configuración solo version v2.1.0)
 ```python
 python .\Main.py 
 ```
