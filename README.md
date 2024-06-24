@@ -1,54 +1,85 @@
 # Proyecto de Obtención de Datos Meteorológicos
 Este proyecto tiene como objetivo recopilar datos meteorológicos de dos fuentes: [Windguru](https://www.windguru.cz/) y la Agencia Estatal de Meteorología [AEMET](https://www.aemet.es/). Además, realiza capturas de pantalla de la web Windguru.
 
-# Ejecución
 
-Ejecucion previa dentro del directorio donde se encuentra el archivo:
-```bash
-pip install .
+
+# La versión de V2.1.0
+
+
+# Archivos configuración
+
+```
+requirements.txt
 ```
 
-Ejecución completa:
+Se encuentra dentro de la carpeta init
+Contiene las dependencias necesarias para poder ejecutar el scrypt
 
-* Ejecucion inicial
 
-```bash
+# init.py
+
+Se encuentra dentro de la carpeta init
+Contiene un código de python el cual al ser ejecutado obtiene los nombres de las dependencias y los instala
+
+Ejecución:
+```
+PS C:\Users\alvar\Documents\GitHub\WebWeatherScraper\init> python .\init.py
+```
+
+
+# Proyecto de Obtención de Datos Meteorológicos
+
+
+Este proyecto tiene como objetivo recopilar datos meteorológicos de dos fuentes: Windguruy la Agencia Estatal de Meteorología AEMET. Además, realiza capturas de pantalla de la web Windguru.
+
+# Ejecución completa:
+
+- Ejecución inicial
+```python
 python .\Main.py <indicador windwuru> <identificador playa aemet> <lugar de geolocalizacion>
 ```
-```bash
+
+```python
 python .\Main.py 487006 play_v2_3900602 Ajo,Cantabria
 ```
-* Guardar los datos
-
-```bash
+- Guardar los datos
+```python
 python .\GuardarDatos.py 487006 C/....
 ```
-```bash
-python .\GuardarDatos.py <indicador windwuru> <ruta donde se encuentran data_buceo>
-Nota: el segundo no es necesario si se dejo por defecto
-```
-Ejecuciones parciales:
 
-```bash
+```python
+python .\GuardarDatos.py <indicador windwuru> <ruta donde se encuentran data_buceo>
+```
+Nota: el segundo no es necesario si se dejo por defecto
+
+- Ejecución inicial (opción obtener datos de la configuración)
+```python
+python .\Main.py 
+```
+
+
+# Ejecuciones parciales:
+
+```python
 python TemperaturaLogger.py <identificador playa aemet> <ruta donde se encuentran data_buceo>
 Nota: el segundo no es necesario si se dejo por defecto
 ```
 
-
-```bash
+```python
 python TomarCapturaWindWuru.py <indicador windwuru>  <ruta donde se encuentran data_buceo>
 Nota: el segundo no es necesario si se dejo por defecto
 ```
 
-
-```bash
+```python
 python WindWuLogger.py <indicador windwuru>  <ruta donde se encuentran data_buceo>
 Nota: el segundo no es necesario si se dejo por defecto
 ```
-```bash
+
+```python
 python ObtenerDireccionViento.py <lugar de geolocalizacion>  <ruta donde se encuentran data_buceo>
 Nota: el segundo no es necesario si se dejo por defecto
 ```
+
 
 # Datos Obtenidos
 Ejemplo de JSON obtenido de Windguru:
