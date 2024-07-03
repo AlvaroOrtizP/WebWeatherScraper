@@ -102,7 +102,6 @@ def guardar_en_base_datos(contenido, lugar):
                 continue
 
             sql = "INSERT INTO tide_table (day, month, year, site, moon_phase,  morning_high_tide_time, morning_high_tide_height, afternoon_high_tide_time, afternoon_high_tide_height, coefficient0H, coefficient12H, morning_low_tide_time, morning_low_tide_height, afternoon_low_tide_time, afternoon_low_tide_height ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE year=VALUES(year), month=VALUES(month), day=VALUES(day), site=VALUES(site), moon_phase=VALUES(moon_phase), morning_high_tide_time=VALUES(morning_high_tide_time), morning_high_tide_height=VALUES(morning_high_tide_height), afternoon_high_tide_time=VALUES(afternoon_high_tide_time), afternoon_high_tide_height=VALUES(afternoon_high_tide_height), coefficient0H=VALUES(coefficient0H), coefficient12H=VALUES(coefficient12H), morning_low_tide_time=VALUES(morning_low_tide_time), morning_low_tide_height=VALUES(morning_low_tide_height), afternoon_low_tide_time=VALUES(afternoon_low_tide_time), afternoon_low_tide_height=VALUES(afternoon_low_tide_height)"
-
             val = (dia, mes, anno, site, lunarPhase, morningHighTideTime, morningHighTideHeight, eveningHighTideTime, eveningHighTideHeight, coefficient0H, coefficient12H, morningLowTideTime, morningLowTideHeight, eveningLowTideTime, eveningLowTideHeight)
             cursor.execute(sql, val)
 
