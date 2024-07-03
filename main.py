@@ -43,7 +43,6 @@ if len(sys.argv) == 4:
     # Obtener los valores específicos proporcionados como argumentos
     valores_especificos = [(sys.argv[1], sys.argv[2], sys.argv[3])]
 else:
-    print("entra")
     # Obtener todos los valores de la base de datos
     valores_especificos = obtener_valores_de_bd()
     if len(sys.argv) == 2:

@@ -29,11 +29,14 @@ class ProcesadorDatos:
                 fecha_inicial = datetime.datetime(int(año), int(mes), int(dia))
 
                 with open(ruta_json) as f:
+                   
                     datos = json.load(f)
                     for clave, dato in datos.items():
+
                         fecha = dato["fecha"]
                         partes_fecha = fecha.split(".")
                         hora = partes_fecha[1].split("h")[0]
+
                         #Aumento de dia
                         if horaAuxiliar > int(hora):
                             # Si la hora actual es menor que la hora anterior, se aumenta el día
@@ -53,7 +56,7 @@ class ProcesadorDatos:
                         olas_altura = dato["olas_altura"]
                         periodo_olas = dato["periodo_olas"]
                         temperatura_tierra = dato["temperatura_tierra"]
-
+            
                         sql = ("INSERT INTO wind_conditions (year, month, day, site, time_of_day, wind, gusts_of_wind, "
                                "wave_height, wave_period, earth_temperature) "
                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
@@ -64,6 +67,7 @@ class ProcesadorDatos:
                         val = (fecha_inicial.year, fecha_inicial.month, fecha_inicial.day, site, hora, viento, rafagas,
                                olas_altura, periodo_olas, temperatura_tierra)
                         cursor.execute(sql, val)
+                        print("se hace insert")
 
                 self.conn.commit()
                 os.remove(ruta_json)

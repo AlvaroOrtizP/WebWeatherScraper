@@ -3,10 +3,10 @@ import mysql.connector
 
 def conectar():
     # Detalles de conexión
-    host = "localhost"
+    host = "192.168.1.142"
     user = "deepdiverecord"
-    password = "deepdiverecord"
-    database = "deepdiverecord"
+    password = "DeepDive123!"
+    database = "DeepDiveRecord"
 
     # Conexión a la base de datos
     try:
