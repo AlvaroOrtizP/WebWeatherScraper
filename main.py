@@ -73,7 +73,7 @@ for valores in valores_especificos:
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TemperaturaLogger.py", valor_especifico_temperaturalogger, valor_especifico_windwulogger)
 
     # Ejecutar TomarCapturaWindWuru.py
-    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TomarCapturaWindWuru.py", valor_especifico_windwulogger)
+    # ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TomarCapturaWindWuru.py", valor_especifico_windwulogger)
 
     # Llamar al programa que obtiene el pronóstico del clima pasando la latitud, longitud y la API key
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/ObtenerDireccionViento.py", lugar, valor_especifico_windwulogger)

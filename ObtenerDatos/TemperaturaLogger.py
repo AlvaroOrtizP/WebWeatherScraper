@@ -96,16 +96,14 @@ class ProcesadorDatos:
                         sql = ("UPDATE wind_conditions SET water_temperature=%s, condition_code=%s, condition_description=%s "
                                "WHERE year=%s AND month=%s AND day=%s AND site=%s AND time_of_day <= '14'")
                         val = (t_agua, f1, descripcion1, año, mes.lstrip("0"), dia.lstrip("0"), id_lugar)
-                        print(f"Se procede a actualizar con la temperatura {t_agua}, el f1 {f1}, la descripcion1 {descripcion1}, "
-                              f"en el año {año}, en el mes {mes.lstrip('0')}, en el dia {dia.lstrip('0')}, y el lugar {id_lugar}")
+
                         cursor.execute(sql, val)
 
                         # En caso de ser posterior a las 14 horas se guardara el f2 y su descripcion
                         sql = ("UPDATE wind_conditions SET water_temperature=%s, condition_code=%s, condition_description=%s "
                                "WHERE year=%s AND month=%s AND day=%s AND site=%s AND time_of_day > '14'")
                         val = (t_agua, f2, descripcion2, año, mes.lstrip("0"), dia.lstrip("0"), id_lugar)
-                        print(f"Se procede a actualizar con la temperatura {t_agua}, el f2 {f2}, la descripcion2 {descripcion2}, "
-                              f"en el año {año}, en el mes {mes.lstrip('0')}, en el dia {dia.lstrip('0')}, y el lugar {id_lugar}")
+
                         cursor.execute(sql, val)
                 
                 self.conn.commit()
