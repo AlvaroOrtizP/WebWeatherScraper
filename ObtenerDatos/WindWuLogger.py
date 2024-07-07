@@ -67,7 +67,7 @@ class ProcesadorDatos:
                         val = (fecha_inicial.year, fecha_inicial.month, fecha_inicial.day, site, hora, viento, rafagas,
                                olas_altura, periodo_olas, temperatura_tierra)
                         cursor.execute(sql, val)
-                        print("se hace insert")
+
 
                 self.conn.commit()
                 os.remove(ruta_json)
