@@ -87,7 +87,17 @@ class ProcesadorDatos:
         except Exception as e:
             cursor.close()
             return f"NOK: Error en procesar_windwuru: {str(e)}"  # Retorna el error si ocurre alguno
-
+        
+    def guardar_contenido_en_archivo(self, contenido, nombre_archivo):
+        try:
+            ruta_guardado = sys.argv[2] if len(sys.argv) > 2 else ""
+            nombre_archivo = f"{ruta_guardado}data_buceo/WindWuru/{nombre_archivo}"
+            with open(nombre_archivo, "w") as f:
+                f.write(contenido)
+            print(f"Contenido guardado en el archivo {nombre_archivo}")
+        except Exception as e:
+            print(f"Error al guardar el contenido en el archivo {nombre_archivo}: {e}")
+            
 def crear_json_padre(datos, id_playa):
     # Crea un objeto JSON a partir de los datos extraídos de la página
     horas, vientos, rafagas, olas_altura_datos, periodo_olas, temperaturas_tierra = datos
@@ -128,6 +138,10 @@ def main(id_playa):
     try:
         html = ObtenerDatosWeb.cargar_pagina(driver, url)
         div = ObtenerDatosWeb.encontrar_div(html)
+        
+        procesador = ProcesadorDatos()
+        procesador.guardar_contenido_en_archivo(str(div), f"direccionesClimatologicas{id_playa}.txt")
+        
         tr = div.find('tr', {'id': DOM_CABECERA})
 
         resultados = ObtenerDatosWeb.obtener_datos_cabecera(tr)    

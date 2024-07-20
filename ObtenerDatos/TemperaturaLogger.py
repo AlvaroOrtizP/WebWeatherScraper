@@ -80,7 +80,6 @@ class ProcesadorDatos:
                     for dato in datos:
                         id_playa = dato["id_playa"]
                         fecha_json = dato["fecha"]
-                        print("prueba obteniendo fecha_json" + fecha_json)
                         año = fecha_json[:4]
                         mes = fecha_json[4:6]
                         dia = fecha_json[6:8]
