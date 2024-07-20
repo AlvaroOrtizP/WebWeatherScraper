@@ -3,7 +3,7 @@ import mysql.connector
 
 def conectar():
     # Detalles de conexión
-    host = "localhost"
+    host = "192.168.1.142"
     user = "deepdiverecord"
     password = "DeepDive123!"
     database = "DeepDiveRecord"
