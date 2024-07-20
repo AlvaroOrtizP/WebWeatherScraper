@@ -66,16 +66,19 @@ CREATE TABLE `tide_table` (
 
 
 CREATE TABLE `wind_conditions` (
-  `year` varchar(4) COLLATE utf8mb4_general_ci NOT NULL,
+  `year` int NOT NULL,
   `month` int NOT NULL,
   `day` int NOT NULL,
   `site` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `time_of_day` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `time_of_day` int DEFAULT 0 COLLATE utf8mb4_general_ci NOT NULL,
   `wind` int DEFAULT NULL,
-  `wind_direction` decimal(5,2) DEFAULT NULL,
+  `wind_direction` int NULL,
+  `wind_direction_nm` varchar(4) NULL, 
   `gusts_of_wind` double DEFAULT NULL,
   `wave_height` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
   `wave_period` int DEFAULT NULL,
+  `wave_direction` int NULL,
+  `wave_direction_nm` varchar(4) NULL,
   `earth_temperature` int DEFAULT 0, 
   `water_temperature` varchar(2) COLLATE utf8mb4_general_ci ,
   `condition_code` int,
