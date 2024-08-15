@@ -20,7 +20,7 @@ def obtener_valores_de_bd():
     if conn:
         try:
             cursor = conn.cursor()
-            cursor.execute("SELECT ID_WINDWURU, ID_AEMET, ID_PLAYA FROM configuration_data")
+            cursor.execute("SELECT ID_WINDWURU, ID_AEMET FROM configuration_data where active = 1")
             result = cursor.fetchall()
             cursor.close()
             conn.close()
@@ -41,7 +41,7 @@ ruta_ejecucion = ""
 # Verificar el número de argumentos proporcionados
 if len(sys.argv) == 4:
     # Obtener los valores específicos proporcionados como argumentos
-    valores_especificos = [(sys.argv[1], sys.argv[2], sys.argv[3])]
+    valores_especificos = [(sys.argv[1], sys.argv[2])]
 else:
     # Obtener todos los valores de la base de datos
     valores_especificos = obtener_valores_de_bd()
@@ -64,7 +64,7 @@ def ejecutar_programa(programa, *args):
 
 # Ejecutar programas para cada conjunto de valores específicos
 for valores in valores_especificos:
-    valor_especifico_windwulogger, valor_especifico_temperaturalogger, lugar = valores        
+    valor_especifico_windwulogger, valor_especifico_temperaturalogger = valores        
     
     # Ejecutar WindWuLogger.py con el valor específico proporcionado
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/WindWuLogger.py", valor_especifico_windwulogger)
@@ -75,10 +75,8 @@ for valores in valores_especificos:
     # Ejecutar TomarCapturaWindWuru.py
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TomarCapturaWindWuru.py", valor_especifico_windwulogger)
 
-    # Llamar al programa que obtiene el pronóstico del clima pasando la latitud, longitud y la API key
-    #ejecutar_programa(ruta_ejecucion +"ObtenerDatos/ObtenerDireccionViento.py", lugar, valor_especifico_windwulogger)
 
-    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/ObtenerFasesLunares.py", lugar)
+    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/ObtenerFasesLunares.py", valor_especifico_windwulogger)
 
     # Ejecutar Direcciones.py con el valor específico proporcionado
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/Direcciones.py")

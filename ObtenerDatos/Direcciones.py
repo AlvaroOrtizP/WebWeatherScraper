@@ -115,7 +115,6 @@ try:
             smer_letras, smer_numeros = separar_direccion(smer_datos[i])
             dirpw_letras, dirpw_numeros = separar_direccion(dirpw_datos[i])
 
-            #print(f"ID_PLAYA: {id_playa}, YEAR: {current_date.year}, MONTH: {current_date.month}, DAY: {current_date.day}, HOUR: {horas[i]}, SMER: {smer_letras} {smer_numeros}, DIRPW: {dirpw_letras} {dirpw_numeros}")
 
             # Completa tu sentencia SQL correctamente aquí
             sql = "UPDATE wind_conditions SET wind_direction=%s, wind_direction_nm=%s, wave_direction=%s, wave_direction_nm=%s WHERE year=%s AND month=%s AND day=%s AND site=%s AND time_of_day= %s"
