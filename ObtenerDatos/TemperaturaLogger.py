@@ -106,7 +106,7 @@ class ProcesadorDatos:
                         cursor.execute(sql, val)
                 
                 self.conn.commit()
-                os.remove(ruta_json)
+                #os.remove(ruta_json)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     if datos_aemet_por_dia:
         fecha_actual = datetime.datetime.now().strftime("%Y_%m_%d")
         ruta_guardado = sys.argv[3] if len(sys.argv) > 3 else ""
-        nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{fecha_actual}.json"    
+        nombre_archivo = f"{ruta_guardado}data_buceo/Aemet/datos_aemet_{id_lugar}_{fecha_actual}.json"    
 
         ProcesadorDatos.guardar_json(datos_aemet_por_dia, nombre_archivo)
         print(f"TEMPERATURA_LOGGER: Datos guardados correctamente en {nombre_archivo}")
