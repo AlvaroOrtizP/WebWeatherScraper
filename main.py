@@ -66,21 +66,22 @@ def ejecutar_programa(programa, *args):
 for valores in valores_especificos:
     valor_especifico_windwulogger, valor_especifico_temperaturalogger = valores        
     
-    # Ejecutar WindWuLogger.py con el valor específico proporcionado
+    print("Parte 1: obtener ficheros, captura y fases lunares")
+    
+    #Generamos los ficheros de todos los datos y los datos de direcciones
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/WindWuLogger.py", valor_especifico_windwulogger)
-
     # Ejecutar TemperaturaLogger.py con el valor específico proporcionado
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TemperaturaLogger.py", valor_especifico_temperaturalogger, valor_especifico_windwulogger)
-
-    # Ejecutar TomarCapturaWindWuru.py
+    #Tomamos la captura
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/TomarCapturaWindWuru.py", valor_especifico_windwulogger)
-
-
+    
     ejecutar_programa(ruta_ejecucion +"ObtenerDatos/ObtenerFasesLunares.py", valor_especifico_windwulogger)
+    
+    #Se juntan los ficheros de windwuru generales con los datos de windwuru direcciones
+    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/JuntarLosDatosFaseUno.py")
+    #Se juntan los ficheros de fase uno con los datos de aemet
+    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/JuntarLosDatosFaseDos.py")
 
-    # Ejecutar Direcciones.py con el valor específico proporcionado
-    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/Direcciones.py")
-    
-    
-    #ejecutar_programa(ruta_ejecucion +"GuardarDatos.py")
+    #Se guardan los datos en la base de datos
+    ejecutar_programa(ruta_ejecucion +"ObtenerDatos/GuardarDatos.py")
     print("OK")
