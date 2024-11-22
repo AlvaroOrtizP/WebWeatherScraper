@@ -1,0 +1,38 @@
+[
+  {
+    "id_lugar": "487006",
+    "id_playa": "play_v2_3900602",
+    "fecha": "20241108",
+    "t_agua": "17",
+    "estado_cielo": {
+      "f1": "120",
+      "descripcion1": "muy nuboso",
+      "f2": "100",
+      "descripcion2": "despejado"
+    }
+  },
+  {
+    "id_lugar": "487006",
+    "id_playa": "play_v2_3900602",
+    "fecha": "20241109",
+    "t_agua": "19",
+    "estado_cielo": {
+      "f1": "110",
+      "descripcion1": "nuboso",
+      "f2": "120",
+      "descripcion2": "muy nuboso"
+    }
+  },
+  {
+    "id_lugar": "487006",
+    "id_playa": "play_v2_3900602",
+    "fecha": "20241110",
+    "t_agua": "18",
+    "estado_cielo": {
+      "f1": "120",
+      "descripcion1": "muy nuboso",
+      "f2": "120",
+      "descripcion2": "muy nuboso"
+    }
+  }
+]

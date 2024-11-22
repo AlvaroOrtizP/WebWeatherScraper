@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import datetime
 import sys
 import shutil  # Para mover los archivos con errores
@@ -88,6 +89,22 @@ def procesar_archivos():
                             t_agua = momento.get('t_agua', None)
                             f = momento.get('f', None)
                             descripcion = momento.get('descripcion', None)
+
+                            # Limpiamos olas_altura y periodo_olas para evitar caracteres no deseados
+                            # Primero eliminamos cualquier carácter no numérico o punto decimal
+                            olas_altura = re.sub(r"[^\d.]", "", olas_altura) if olas_altura else "0"
+                            periodo_olas = re.sub(r"[^\d.]", "", periodo_olas) if periodo_olas else "0"
+
+                            # Luego, si quedaron vacíos después de la limpieza, asignamos "0"
+                            olas_altura = "0" if olas_altura == "" else olas_altura
+                            periodo_olas = "0" if periodo_olas == "" else periodo_olas
+
+                            # Imprimimos los valores después de la limpieza para verificar
+                            #print(f"Valores después de limpieza: olas_altura={olas_altura}, periodo_olas={periodo_olas}")
+
+
+
+
 
                             if None in [hora, site, viento, rafagas, olas_altura, periodo_olas, temperatura_tierra, waveDirection, waveDirectionNM]:
                                 print(f"Datos incompletos en el archivo {archivo}, saltando momento: {momento}")
