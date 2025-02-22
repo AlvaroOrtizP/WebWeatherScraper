@@ -3,9 +3,15 @@ import json
 import re
 import datetime
 import sys
-import shutil  # Para mover los archivos con errores
+import shutil  
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from conexion.conexion_mysql import conectar
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+import smtplib
+from dotenv import load_dotenv
+
 
 def obtener_mes_por_dia(año, dia_del_año):
     año = int(año)
@@ -18,7 +24,56 @@ def obtener_dia_por_dia(año, dia_del_año):
     dia_del_año = int(dia_del_año)
     fecha = datetime.datetime(año, 1, 1) + datetime.timedelta(days=dia_del_año - 1)
     return fecha.day
+def enviar_correo(asunto, mensaje, adjuntos=None):
+    # Cargar las variables de entorno desde el archivo .env
+    load_dotenv()
+    remitente = os.getenv("MAIL_USERNAME")
+    destinatario = os.getenv("TO_MAIL_USERNAME")
+    contraseña = os.getenv("MAIL_PASSWORD") 
+    print(f"MAIL_USERNAME: {os.getenv('MAIL_USERNAME')}")
+    print(f"TO_MAIL_USERNAME: {os.getenv('TO_MAIL_USERNAME')}")
+    print(f"MAIL_PASSWORD: {'*' * len(os.getenv('MAIL_PASSWORD', ''))}")  
+    
+    msg = MIMEMultipart()
+    msg['From'] = remitente
+    msg['To'] = destinatario
+    msg['Subject'] = asunto
 
+    # Adjuntar el cuerpo del mensaje
+    msg.attach(MIMEText(mensaje, 'plain'))
+
+     # Adjuntar archivos
+    if adjuntos:
+        for adjunto in adjuntos:
+            with open(adjunto, 'rb') as f:
+                parte_adjunto = MIMEApplication(f.read(), Name=os.path.basename(adjunto))
+                parte_adjunto['Content-Disposition'] = f'attachment; filename="{os.path.basename(adjunto)}"'
+                msg.attach(parte_adjunto)
+
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as servidor:
+            servidor.starttls()
+            servidor.login(remitente, contraseña)
+            servidor.sendmail(remitente, destinatario, msg.as_string())
+            print("Correo enviado exitosamente.")
+    except Exception as e:
+        print(f"Error al enviar el correo: {str(e)}")
+        
+def obtener_archivos(carpeta):
+    """Obtiene todos los archivos de una carpeta."""
+    if os.path.exists(carpeta):
+        return [os.path.join(carpeta, archivo) for archivo in os.listdir(carpeta) if os.path.isfile(os.path.join(carpeta, archivo))]
+    return []
+
+
+def eliminar_archivos(carpeta):
+    """Elimina todos los archivos de una carpeta."""
+    if os.path.exists(carpeta):
+        for archivo in os.listdir(carpeta):
+            ruta_archivo = os.path.join(carpeta, archivo)
+            if os.path.isfile(ruta_archivo):
+                os.remove(ruta_archivo)     
+        
 def procesar_archivos():
     # Conectar a la base de datos
     conn = conectar()
@@ -30,12 +85,14 @@ def procesar_archivos():
     carpeta = "./data_buceo/res/"
     carpeta_errores = "./data_buceo/ficherosErrores/"
     carpeta_historico = "./data_buceo/historico/"
+    carpeta_capturas = "./data_buceo/capturas/"
     if not os.path.exists(carpeta_errores):
         os.makedirs(carpeta_errores)
 
     # Listar todos los archivos en la carpeta que sean .json
     archivos = [archivo for archivo in os.listdir(carpeta) if archivo.endswith(".json")]
-
+    archivos_procesados = []
+    errores = []
     # Procesar cada archivo
     for archivo in archivos:
         try:
@@ -142,18 +199,60 @@ def procesar_archivos():
             conn.commit()
             print(f"Procesamiento y guardado de {archivo} completado.")
             # Mover el archivo después de procesarlo
+             # Si se procesa correctamente
+            archivos_procesados.append(archivo)
+            # Mover el archivo después de procesarlo
             archivo_historico = os.path.join(carpeta_historico, archivo)
-            shutil.move(ruta_json, archivo_historico)
+            shutil.move(os.path.join(carpeta, archivo), archivo_historico)
+
         
         except Exception as e:
             print(f"Error procesando el archivo {archivo}: {str(e)}")
             # Mover archivo con error a la carpeta de errores
             archivo_error = os.path.join(carpeta_errores, archivo)
-            shutil.move(ruta_json, archivo_error)
+            shutil.move(os.path.join(carpeta, archivo), archivo_error)
+
             print(f"Archivo {archivo} movido a la carpeta de errores.")
-    
+     # Archivos de las carpetas
+    adjuntos_historico = obtener_archivos(carpeta_historico)
+    adjuntos_capturas = obtener_archivos(carpeta_capturas)
+    adjuntos_errores = obtener_archivos(carpeta_errores)
+
+    # Enviar correos según el resultado
+    if errores:
+        mensaje_error = (
+            f"Se procesaron algunos archivos con errores.\n\nErrores:\n" +
+            "\n".join(errores)
+        )
+        enviar_correo(
+            "Errores en el procesamiento de archivos",
+            mensaje_error,
+            adjuntos=adjuntos_historico + adjuntos_capturas + adjuntos_errores
+        )
+    else:
+        mensaje_exito = (
+            "Todos los archivos fueron procesados exitosamente.\n\n" +
+            f"Archivos procesados:\n" + "\n".join(archivos_procesados)
+        )
+        enviar_correo(
+            "Reporte diario - exitoso",
+            mensaje_exito,
+            adjuntos=adjuntos_historico + adjuntos_capturas
+        )
+
+    eliminar_archivos(carpeta_historico)
+    eliminar_archivos(carpeta_capturas)
+    #eliminar_archivos(carpeta_errores)
     cursor.close()
     conn.close()
+    
+def eliminar_archivos(carpeta):
+    """Elimina todos los archivos de una carpeta."""
+    if os.path.exists(carpeta):  # Verifica que la carpeta exista
+        for archivo in os.listdir(carpeta):  # Recorre todos los archivos dentro de la carpeta
+            ruta_archivo = os.path.join(carpeta, archivo)  # Construye la ruta completa
+            if os.path.isfile(ruta_archivo):  # Asegura que es un archivo y no un directorio
+                os.remove(ruta_archivo)  # Elimina el archivo
 
 if __name__ == "__main__":
     procesar_archivos()
