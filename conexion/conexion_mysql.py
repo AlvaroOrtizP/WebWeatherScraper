@@ -1,12 +1,15 @@
-
+import os
 import mysql.connector
-
+from dotenv import load_dotenv
 def conectar():
+    # Cargar .env
+    load_dotenv()
+
     # Detalles de conexión
-    host = "192.168.1.142"
-    user = "deepdiverecord"
-    password = "DeepDive123!"
-    database = "DeepDiveRecord"
+    host = os.getenv("DB_HOST")
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    database = os.getenv("DB_NAME")
 
     # Conexión a la base de datos
     try:

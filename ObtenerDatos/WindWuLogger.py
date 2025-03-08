@@ -48,7 +48,10 @@ def crear_json_padre(datos, id_playa):
     return json.dumps(resultado)
 
 def limpiar_dato(dato):
-    return dato.replace('�', '')
+    # Reemplazar caracteres no deseados con un '0' si se encuentran
+    dato = dato.replace('Â', '').replace('\xa0', '').strip()
+    return dato if dato else '0'  # Si el dato queda vacío, devuelve '0'
+
 
 def separar_direccion(direccion):
     match = re.match(r'([A-Z]+) \((\d+)\)', direccion)
